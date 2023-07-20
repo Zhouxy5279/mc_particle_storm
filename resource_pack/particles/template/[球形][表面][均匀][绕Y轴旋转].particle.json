@@ -1,0 +1,57 @@
+{
+	"format_version": "1.10.0",
+	"particle_effect": {
+		"description": {
+			"identifier": "cy:ball_snow_storm",
+			"basic_render_parameters": {
+				"material": "particles_alpha",
+				"texture": "textures/particle/particles"
+			}
+		},
+		"curves": {
+			"variable.raduis_coefficient": {
+				"type": "catmull_rom",
+				"input": "variable.emitter_age/variable.emitter_lifetime",
+				"horizontal_range": 1,
+				"nodes": [0, 0, 1, 0]
+			}
+		},
+		"components": {
+			"minecraft:emitter_initialization": {
+				"creation_expression": "variable.max_radius = 10;variable.max_particle_count =100;variable.xi_ta = 0.618;variable.rot_angle_speed= 60;variable.par_pos_x = 0;variable.par_pos_z = 0;",
+				"per_update_expression": "variable.particle_N = 2;"
+			},
+			"minecraft:emitter_local_space": {
+				"position": true,
+				"rotation": false
+			},
+			"minecraft:emitter_rate_instant": {
+				"num_particles": "variable.max_particle_count"
+			},
+			"minecraft:emitter_lifetime_once": {
+				"active_time": 10
+			},
+			"minecraft:emitter_shape_point": {},
+			"minecraft:particle_lifetime_expression": {
+				"max_lifetime": 10
+			},
+			"minecraft:particle_motion_parametric": {
+				"relative_position": ["variable.particle_N=variable.particle_N+1;variable.par_pos_x = variable.raduis_coefficient*variable.max_radius*math.sqrt(1 - math.pow((2* variable.particle_N-1)/variable.max_particle_count - 1, 2)) * math.cos(360*variable.xi_ta*variable.particle_N+variable.particle_age*variable.rot_angle_speed);return variable.par_pos_x;", "variable.raduis_coefficient*variable.max_radius*((2* variable.particle_N-1)/variable.max_particle_count - 1)", "variable.par_pos_z = variable.raduis_coefficient*variable.max_radius*math.sqrt(1 - math.pow((2* variable.particle_N-1)/variable.max_particle_count - 1, 2)) * math.sin(360*variable.xi_ta*variable.particle_N+variable.particle_age*variable.rot_angle_speed); return variable.par_pos_z;"],
+				"direction": ["variable.par_pos_x", "variable.raduis_coefficient*variable.max_radius*((2* variable.particle_N-1)/variable.max_particle_count - 1)", "variable.par_pos_z"]
+			},
+			"minecraft:particle_appearance_billboard": {
+				"size": ["math.sqrt(4*math.pi*math.pow(variable.raduis_coefficient*variable.max_radius, 2)/variable.max_particle_count)", "math.sqrt(4*math.pi*math.pow(variable.raduis_coefficient*variable.max_radius, 2)/variable.max_particle_count)"],
+				"facing_camera_mode": "direction_z",
+				"uv": {
+					"texture_width": 128,
+					"texture_height": 128,
+					"uv": [32, 16],
+					"uv_size": [32, 32]
+				}
+			},
+			"minecraft:particle_appearance_tinting": {
+				"color": [0, 0.72157, 1, 1]
+			}
+		}
+	}
+}
