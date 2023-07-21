@@ -1,3 +1,3 @@
-## mc粒子备份mc_particle_storm
-* 存储了一份原生的粒子Json
-* 以及一些mc的基础粒子模板
+## MC Particle Storm
+* 备份一些mc的基础粒子模板
+* 使用Snow Storm插件进行编辑
